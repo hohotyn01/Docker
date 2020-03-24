@@ -1,0 +1,32 @@
+version: '3.7'
+
+services:
+  web:
+    build: ./web
+    container_name: php-apache
+    ports:
+      - 80:80
+    volumes:
+      - './../Code:/var/www'
+    tty: true
+    networks:
+      app-network: null
+  #MySQL Service
+  db:
+    image: mysql:8.0.19
+    container_name: db-mysql
+    restart: always
+    volumes:
+      - ./mysql/data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=mayor
+      - MYSQL_DATABASE=test
+      - MYSQL_USER=captain
+      - MYSQL_PASSWORD=captain
+    ports:
+      - '3306:3306'
+    networks:
+      app-network: null
+#Docker Networks
+networks:
+  app-network: null
